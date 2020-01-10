@@ -42,7 +42,8 @@ def run(model: Union[nn.Module, None] = None, batch_size: int = 1024, epoch: int
                 loss = criterion(outputs, labels)
                 loss.backward()
                 optimizer.step()
-    print("Training time {:.2f}".format(timeit(lambda:train(), number=1)))
+
+    print("Training time {:.2f}".format(timeit(lambda: train(), number=1)))
     with torch.no_grad():
         total, correct = .0, .0
         for data in test_loader:
@@ -53,7 +54,8 @@ def run(model: Union[nn.Module, None] = None, batch_size: int = 1024, epoch: int
             _, predicted = torch.max(outputs.data, 1)
             total += labels.size(0)
             correct += (predicted == labels).sum().item()
-    print("Accuracy {:.2f} %".format(100*correct/total))
+    print("Accuracy {:.2f} %".format(100 * correct / total))
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -74,4 +76,3 @@ if __name__ == '__main__':
         model = None
     print('running model with {}'.format('no parallel' if not model else args.model))
     run(model=model, batch_size=args.batch_size, epoch=args.epoch)
-
